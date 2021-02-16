@@ -2,7 +2,7 @@
 # File: guessinggame.sh
 
 # Determine how many regular files are in the current directory
-nfiles=$(ls -Ad (.*|*) | wc -l | egrep -o "[0-9]+")
+nfiles=$(ls -Ap | grep -v / | wc -l | egrep -o "[0-9]+")
 
 # Initialize a guess value
 guess=-1
@@ -17,10 +17,10 @@ do
 	if [[ $guess -gt $nfiles ]]
 	then
 		echo "Number of files is less than $guess"
-	elif [[ $guess -lt $files ]]
+	elif [[ $guess -lt $nfiles ]]
 	then
 		echo "Number of files is greater than $guess" 	
-	elif [[ $guess -eq $files ]]
+	elif [[ $guess -eq $nfiles ]]
 	then
 		echo "Congratulations! Your guess is correct!"
 		echo "There are $guess files in the current directory."
