@@ -7,24 +7,31 @@ nfiles=$(ls -Ap | grep -v / | wc -l | egrep -o "[0-9]+")
 # Initialize a guess value
 guess=-1
 
+# Define function to compare user guess to the actual number of files
+function checkguess {        
+	# Ask the user to guess the number of files in the directory
+	echo -n "Please guess the number of files in the current directory: "
+	read guess
+
+	# If statement to compare the user guess to the actual number of files
+	if [[ $guess -gt $nfiles ]]
+        then
+                echo "Number of files is less than $guess"
+        elif [[ $guess -lt $nfiles ]]
+        then
+                echo "Number of files is greater than $guess"
+        elif [[ $guess -eq $nfiles ]]
+        then
+                echo "Congratulations! Your guess is correct!"
+                echo "There are $guess files in the current directory."
+        fi
+} 
+
+# Execute while loop until the user guess matches the actual number of files in the directory
 while [[ $guess -ne $nfiles ]]
 do 
-	# Ask the user to guess how many files are in the directory
-	echo "Please enter a guess for the number of files in the current directory: "	
-	read guess
-	
-	# Tell the user if the guess is high or low
-	if [[ $guess -gt $nfiles ]]
-	then
-		echo "Number of files is less than $guess"
-	elif [[ $guess -lt $nfiles ]]
-	then
-		echo "Number of files is greater than $guess" 	
-	elif [[ $guess -eq $nfiles ]]
-	then
-		echo "Congratulations! Your guess is correct!"
-		echo "There are $guess files in the current directory."
-	fi
+	# Call the checkguess function to compare the guess to the actual number of files
+	checkguess
 done
 
 
